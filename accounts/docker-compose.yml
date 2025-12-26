@@ -1,0 +1,40 @@
+services:
+  accounts:
+    image: "vantu26511/accounts:v100"
+    container_name: accounts-ms
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - easybank
+
+  loans:
+    image: "vantu26511/loans:v100"
+    container_name: loans-ms
+    ports:
+      - "8090:8090"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - easybank
+
+  cards:
+    image: "vantu26511/cards:v100"
+    container_name: cards-ms
+    ports:
+      - "9000:9000"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - easybank
+
+networks:
+  easybank:
+    driver: "bridge"

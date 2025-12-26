@@ -1,0 +1,23 @@
+1. vào pom đặt định dạng là jar
+
+2. build image từ Dockerfile
+    // . = thư mục hiện tại, gửi toàn bộ thư mục này cho docker daemon để nó quét ra dockerfile
+    // -t (tagImage) theo cấu trúc [registry]/[username]/[repository]:[tag]
+    // :v100 (tag), mặc định là latest
+    docker build . -t vantu26511/accounts:v100
+
+3. xem các images đã tạo
+    docker images
+
+4. chạy image tạo container và map port [port ngoài / port trong]
+    // 8080:8080 = [port để truy cập từ trình duyệt / Postman]:[App bên trong container đang lắng nghe port 8080 <=> file properties]
+    docker run -p 8080:8080 vantu26511/accounts:v100
+
+5. chỉ xem các container đang chạy
+    docker ps
+
+6. xem tất cả container đã tạo gồm đang chạy và đã dừng
+    docker ps -a
+
+7. push image leen Dockerhub
+     docker image push docker.io/vantu26511/accounts:v100

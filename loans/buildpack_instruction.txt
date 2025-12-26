@@ -1,0 +1,14 @@
+1. vào pom.xml đặt định dạng là jar
+
+2. đặt tên cho image theo rule dưới
+    // . = thư mục hiện tại, gửi toàn bộ thư mục này cho docker daemon để nó quét ra dockerfile
+    // -t (tagImage) theo cấu trúc [registry]/[username]/[repository]:[tag]
+    // :v100 (tag), mặc định là latest
+    docker build . -t vantu26511/accounts:v100
+
+3. chạy lệnh build:
+    mvn spring-boot:build image
+
+4. chạy lệnh
+    // -d khi ko muốn log thông tin chạy
+    docker run -d -p 8090:8090 vantu26511/loans:v100

@@ -1,0 +1,20 @@
+1. truy cập
+    https://github.com/GoogleContainerTools/jib?tab=readme-ov-file
+
+2. vào jib-maven-plugin lấy plugin thêm vào pom
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <to>
+            <image>myimage</image>
+          </to>
+        </configuration>
+      </plugin>
+
+3. dùng lệnh tạo image
+    mvn compile jib:dockerBuild
+
+4. chạy image tạo container
+    docker run -p 9000:9000 vantu26511/cards:v100
