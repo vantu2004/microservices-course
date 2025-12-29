@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  version: "2.0"
+
+accounts:
+  message: "Welcome to EazyBank accounts related QA APIs"
+  contactDetails:
+    name: "levantu - QA Lead"
+    email: "vantu@gmail.com"
+  onCallSupport:
+    - (666) 123-456
+    - (666) 456-789
