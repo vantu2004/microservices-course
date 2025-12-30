@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  version: "2.0"
+
+cards:
+  message: "Welcome to EazyBank cards related local APIs"
+  contactDetails:
+    name: "John Doe - Developer"
+    email: "john@easybank.com"
+  onCallSupport:
+    - (777) 123-456
+    - (777) 456-789
