@@ -1,10 +1,5 @@
-spring:
-  config:
-    activate:
-      on-profile: "prod"
-
 build:
-  version: "1.0"
+  version: "3.0"
 
 cards:
   message: "Welcome to EasyBank cards related local APIs"
@@ -12,5 +7,5 @@ cards:
     name: "John Doe - Developer"
     email: "john@easybank.com"
   onCallSupport:
-    - (666) 123-456
-    - (666) 456-789
+    - (555) 123-456
+    - (555) 456-789
