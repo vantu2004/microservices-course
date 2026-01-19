@@ -2,13 +2,20 @@ spring:
   application:
     name: configserver
   profiles:
-    active: native
+    # active: native
+    active: git
   cloud:
     config:
       server:
-        native:
-        # search-locations: "classpath:/config"
-          search-locations: "file:///C://Users//tulev//OneDrive//Documents//bin//config"
+        git:
+          uri: "https://github.com/vantu2004/easybytes-config.git"
+          default-label: master
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+        # native:
+          # search-locations: "classpath:/config"
+          # search-locations: "file:///C://Users//tulev//OneDrive//Documents//bin//config"
 
 server:
   port: 8071
