@@ -16,9 +16,20 @@ spring:
         # native:
           # search-locations: "classpath:/config"
           # search-locations: "file:///C://Users//tulev//OneDrive//Documents//bin//config"
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
 server:
   port: 8071
 
 encrypt:
   key: "Ux4B(t,6X]shYE[9"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
