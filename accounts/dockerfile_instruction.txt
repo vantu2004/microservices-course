@@ -20,4 +20,4 @@
     docker ps -a
 
 7. push image leen Dockerhub
-     docker image push docker.io/vantu26511/accounts:v100
+    docker image push docker.io/vantu26511/accounts:v100
