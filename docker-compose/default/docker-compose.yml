@@ -1,0 +1,97 @@
+services:
+  rabbitmq:
+    image: "rabbitmq:4-management"
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - easybank
+  configserver:
+    image: "vantu26511/configserver:v100"
+    container_name: configserver-ms
+    ports:
+      - "8071:8071"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8071/actuator/health/liveness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - easybank
+
+  accounts:
+    image: "vantu26511/accounts:v100"
+    container_name: accounts-ms
+    ports:
+      - "8080:8080"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - easybank
+    environment:
+      SPRING_APPLICATION_NAME: "accounts"
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071"
+      SPRING_PROFILES_ACTIVE: default
+
+  loans:
+    image: "vantu26511/loans:v100"
+    container_name: loans-ms
+    ports:
+      - "8090:8090"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - easybank
+    environment:
+      SPRING_APPLICATION_NAME: "loans"
+      # configserver ở đây KHÔNG phải localhost, mà là tên service trong docker network
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071"
+      SPRING_PROFILES_ACTIVE: default
+
+  cards:
+    image: "vantu26511/cards:v100"
+    container_name: cards-ms
+    ports:
+      - "9000:9000"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - easybank
+    environment:
+      SPRING_APPLICATION_NAME: "cards"
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071"
+      SPRING_PROFILES_ACTIVE: default
+
+networks:
+  easybank:
+    driver: "bridge"
