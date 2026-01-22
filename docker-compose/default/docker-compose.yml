@@ -75,6 +75,24 @@ services:
       file: common-config.yml
       service: microservice-configserver-config
 
+#  db:
+#    image: mysql:8.0
+#    container_name: mysql_container
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+
+#    mysql:
+#      container_name: 'guide-mysql'
+#      image: 'mysql:latest'
+#      environment:
+#        - 'MYSQL_DATABASE=mydatabase'
+#        - 'MYSQL_PASSWORD=secret'
+#        - 'MYSQL_ROOT_PASSWORD=verysecret'
+#        - 'MYSQL_USER=myuser'
+#      ports:
+#        - '3306:3306'
+
 networks:
   easybank:
     driver: "bridge"

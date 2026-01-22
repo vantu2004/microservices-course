@@ -6,18 +6,18 @@ spring:
   profiles:
     active: "prod"
   datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ''
-  h2:
-    console:
-      enabled: true
+    url: jdbc:mysql://localhost:3309/loansdb
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
     show-sql: true
+#  tận dụng file schema.sql
+#  sql:
+#    init:
+#      mode: always
   config:
     import: " optional:configserver:http://localhost:8071"
   rabbitmq:
