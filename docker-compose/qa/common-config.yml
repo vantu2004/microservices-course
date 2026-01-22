@@ -19,6 +19,6 @@ services:
     extends:
       service: microservice-base-config
     environment:
-      SPRING_PROFILES_ACTIVE: default
+      SPRING_PROFILES_ACTIVE: qa
       # configserver ở đây KHÔNG phải localhost, mà là tên service trong docker network
       SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
