@@ -3,6 +3,19 @@ services:
     networks:
       - easybank
 
+  microservice-db-config:
+    extends:
+      service: network-deploy-service
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
   microservice-base-config:
     extends:
       service: network-deploy-service
@@ -22,3 +35,5 @@ services:
       SPRING_PROFILES_ACTIVE: qa
       # configserver ở đây KHÔNG phải localhost, mà là tên service trong docker network
       SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
