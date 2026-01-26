@@ -1,3 +1,22 @@
 spring:
   application:
     name: eurekaserver
+
+  config:
+    import: "optional:configserver:http://localhost:8071"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  # Cho phép Spring Boot tự động ghép liveness + readiness vào health, nghĩa là chỉ cần gọi /actuator/health là trả về đủ readiness và liveness
+  endpoint:
+    health:
+      probes:
+        enabled: true

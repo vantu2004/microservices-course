@@ -34,9 +34,9 @@ management:
       exposure:
         include: "*"
   health:
-    readinessstate:
+    readiness-state:
       enabled: true
-    livenessstate:
+    liveness-state:
       enabled: true
   # Cho phép Spring Boot tự động ghép liveness + readiness vào health, nghĩa là chỉ cần gọi /actuator/health là trả về đủ readiness và liveness
   endpoint:
