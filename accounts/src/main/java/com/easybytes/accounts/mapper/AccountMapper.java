@@ -8,6 +8,7 @@ public class AccountMapper {
         accountDto.setAccountNumber(account.getAccountNumber());
         accountDto.setAccountType(account.getAccountType());
         accountDto.setBranchAddress(account.getBranchAddress());
+
         return accountDto;
     }
 
@@ -15,6 +16,7 @@ public class AccountMapper {
         account.setAccountNumber(accountDto.getAccountNumber());
         account.setAccountType(accountDto.getAccountType());
         account.setBranchAddress(accountDto.getBranchAddress());
+
         return account;
     }
 }
