@@ -1,3 +1,41 @@
 spring:
   application:
-    name: gatewayserver
+    name: "gatewayserver"
+  config:
+    import: "optional:configserver:http://localhost:8071"
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  # expose endpoint: /actuator/shutdown
+  endpoint:
+    gateway:
+      access: unrestricted
+  # expose endpoint: /actuator/info
+  info:
+    env:
+      enabled: true
+
+# load từ github repo
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone: "http://localhost:8070/eureka/"
+
+# in eureka dashboard
+info:
+  app:
+    name: "gatewayserver"
+    description: "Easy Bank Gateway Server Application"
+    version: 1.0.0
