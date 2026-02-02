@@ -8,6 +8,14 @@ spring:
     port: 5672
     username: guest
     password: guest
+  # Tự động tạo route cho các microservices đã đăng ký với Eureka
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
 
 management:
   endpoints:
