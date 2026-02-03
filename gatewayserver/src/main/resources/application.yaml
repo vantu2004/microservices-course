@@ -8,7 +8,7 @@ spring:
     port: 5672
     username: guest
     password: guest
-  # Tự động tạo route cho các microservices đã đăng ký với Eureka
+  # Tự động tạo route cho các microservices đã đăng ký với Eureka, là các default routes trong /actuator/gateway/routes
   cloud:
     gateway:
       server:
@@ -16,13 +16,15 @@ spring:
           discovery:
             locator:
               enabled: true
+              # gateway tự convert về lowercase
+              lower-case-service-id: true
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-  # expose endpoint: /actuator/shutdown
+  # expose endpoint: /actuator/gateway/routes
   endpoint:
     gateway:
       access: unrestricted
