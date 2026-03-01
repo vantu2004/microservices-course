@@ -50,3 +50,10 @@ info:
     name: "gatewayserver"
     description: "Easy Bank Gateway Server Application"
     version: 1.0.0
+
+# bật log cho gatewayserver để log Correlation Id
+logging:
+  level:
+    com:
+      easybytes:
+        gatewayserver: DEBUG
