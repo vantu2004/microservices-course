@@ -1,5 +1,6 @@
 package com.easybytes.gatewayserver;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -13,17 +14,19 @@ public class GatewayserverApplication {
         SpringApplication.run(GatewayserverApplication.class, args);
     }
 
+    // tự define bằng RouteLocatorBuilder
     @Bean
     public RouteLocator easybankRouteConfig(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(p -> p
+                        // điều kiện match url
                         .path("/easybank/accounts/**")
                         .filters(f -> f
                                 // cắt bỏ /easybank/accounts, gửi segment (phần đuôi, vd: /api/account) đến ACCOUNTS service
                                 .rewritePath(
                                         "/easybank/accounts/(?<segment>.*)",
                                         "/${segment}"
-                                )
+                                ).addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
                         )
                         .uri("lb://ACCOUNTS")
                 )
@@ -33,7 +36,7 @@ public class GatewayserverApplication {
                                 .rewritePath(
                                         "/easybank/loans/(?<segment>.*)",
                                         "/${segment}"
-                                )
+                                ).addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
                         )
                         .uri("lb://LOANS")
                 )
@@ -43,7 +46,7 @@ public class GatewayserverApplication {
                                 .rewritePath(
                                         "/easybank/cards/(?<segment>.*)",
                                         "/${segment}"
-                                )
+                                ).addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
                         )
                         .uri("lb://CARDS")
                 )

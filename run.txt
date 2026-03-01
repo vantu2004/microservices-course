@@ -1,0 +1,17 @@
+1. run rabbitmq
+    docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+
+2. create db
+    - docker:
+        docker run --name accountsdb -e MYSQL_DATABASE=accountsdb -e MYSQL_ROOT_PASSWORD=root -p 3307:3306 -d mysql:8.0
+        docker run --name loansdb -e MYSQL_DATABASE=loansdb -e MYSQL_ROOT_PASSWORD=root -p 3308:3306 -d mysql:8.0
+        docker run --name cardsdb -e MYSQL_DATABASE=cardsdb -e MYSQL_ROOT_PASSWORD=root -p 3309:3306 -d mysql:8.0
+    - mysql workbench: tạo 3 MySQL connection mới với 3 port tương ứng mysql container
+
+3. run server:
+    - Config Server
+    - Eureka Server
+    - Accounts Microservice
+    - Cards Microservice
+    - Loans Microservice
+    - Gateway Server

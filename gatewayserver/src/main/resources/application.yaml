@@ -15,7 +15,8 @@ spring:
         webflux:
           discovery:
             locator:
-              enabled: true
+              # ko tự tạo routes nữa mà tự define bằng RouteLocatorBuilder
+              enabled: false
               # gateway tự convert về lowercase
               lower-case-service-id: true
 
