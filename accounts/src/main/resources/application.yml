@@ -63,3 +63,10 @@ info:
     name: "accounts"
     description: "Easy Bank Accounts Application"
     version: 1.0.0
+
+# bật log cho gatewayserver để log Correlation Id
+logging:
+  level:
+    com:
+      easybytes:
+        accounts: DEBUG
