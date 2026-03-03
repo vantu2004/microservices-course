@@ -56,10 +56,16 @@ services:
       service: microservice-configserver-config
 
   accounts:
-    image: "vantu26511/accounts:v103"
+    image: "vantu26511/accounts:v104"
     container_name: accounts-ms
     ports:
       - "8080:8080"
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health/liveness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "accounts"
       # chỉnh port 3306 chứ ko bắt port expose của mysql container vì service chạy cùng mạng trong Docker chứ ko truy cập từ bên ngoài
@@ -69,10 +75,16 @@ services:
       service: microservice-eureka-config
 
   loans:
-    image: "vantu26511/loans:v103"
+    image: "vantu26511/loans:v104"
     container_name: loans-ms
     ports:
       - "8090:8090"
+    healthcheck:
+      test: "curl --fail --silent localhost:8090/actuator/health/liveness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "loans"
       SPRING_DATASOURCE_URL: "jdbc:mysql://loansdb:3306/loansdb"
@@ -81,13 +93,37 @@ services:
       service: microservice-eureka-config
 
   cards:
-    image: "vantu26511/cards:v103"
+    image: "vantu26511/cards:v104"
     container_name: cards-ms
     ports:
       - "9000:9000"
+    healthcheck:
+      test: "curl --fail --silent localhost:9000/actuator/health/liveness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "cards"
       SPRING_DATASOURCE_URL: "jdbc:mysql://cardsdb:3306/cardsdb"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
+  gatewayserver:
+    image: "vantu26511/gatewayserver:v100"
+    container_name: gatewayserver-ms
+    ports:
+      - "8072:8072"
+    depends_on:
+      accounts:
+        condition: service_healthy
+      loans:
+        condition: service_healthy
+      cards:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
     extends:
       file: common-config.yml
       service: microservice-eureka-config

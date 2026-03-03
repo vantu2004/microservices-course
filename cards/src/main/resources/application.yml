@@ -14,10 +14,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-#  tận dụng file schema.sql
-#  sql:
-#    init:
-#      mode: always
+  #  tận dụng file schema.sql
+  #  sql:
+  #    init:
+  #      mode: always
   config:
     import: "optional:configserver:http://localhost:8071"
   rabbitmq:
@@ -35,9 +35,17 @@ management:
   endpoint:
     shutdown:
       access: unrestricted
+    health:
+      probes:
+        enabled: true
   # expose endpoint: /actuator/info
   info:
     env:
+      enabled: true
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
       enabled: true
 
 eureka:

@@ -43,9 +43,18 @@ management:
   endpoint:
     shutdown:
       access: unrestricted
+    # Cho phép Spring Boot tự động ghép liveness + readiness vào health, nghĩa là chỉ cần gọi /actuator/health là trả về đủ readiness và liveness
+    health:
+      probes:
+        enabled: true
   # expose endpoint: /actuator/info
   info:
     env:
+      enabled: true
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
       enabled: true
 
 eureka:
