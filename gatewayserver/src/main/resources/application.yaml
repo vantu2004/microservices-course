@@ -57,3 +57,12 @@ logging:
     com:
       easybytes:
         gatewayserver: DEBUG
+
+# truy cập /actuator/circuitbreakers để xem log sau mỗi request
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 2
+      waitDurationInOpenState: 10000
+      failureRateThreshold: 50

@@ -26,7 +26,11 @@ public class GatewayserverApplication {
                                 .rewritePath(
                                         "/easybank/accounts/(?<segment>.*)",
                                         "/${segment}"
-                                ).addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                                )
+                                .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                                .circuitBreaker(config -> config
+                                // truy cập /actuator/circuitbreakerevents?name=accountsCircuitBreaker
+                                .setName("accountsCircuitBreaker"))
                         )
                         .uri("lb://ACCOUNTS")
                 )
@@ -36,7 +40,8 @@ public class GatewayserverApplication {
                                 .rewritePath(
                                         "/easybank/loans/(?<segment>.*)",
                                         "/${segment}"
-                                ).addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                                )
+                                .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
                         )
                         .uri("lb://LOANS")
                 )
@@ -46,7 +51,8 @@ public class GatewayserverApplication {
                                 .rewritePath(
                                         "/easybank/cards/(?<segment>.*)",
                                         "/${segment}"
-                                ).addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                                )
+                                .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
                         )
                         .uri("lb://CARDS")
                 )
