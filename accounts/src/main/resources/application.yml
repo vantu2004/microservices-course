@@ -33,6 +33,11 @@ spring:
     port: 5672
     username: guest
     password: guest
+  # dùng circuitbreaker bảo vệ mọi service-to-service call
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 
 management:
   endpoints:
@@ -79,3 +84,12 @@ logging:
     com:
       easybytes:
         accounts: DEBUG
+
+# truy cập /actuator/circuitbreakers để xem log sau mỗi request
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 2
+      waitDurationInOpenState: 10000
+      failureRateThreshold: 50

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 // dùng đúng tên đã đăng ký trong eureka server
-@FeignClient("loans")
+@FeignClient(name = "loans", fallback = LoansFallback.class)
 public interface LoansFeignClient {
     @GetMapping(value = "/api/loan", consumes = "application/json")
     ResponseEntity<LoansDto> fetchLoanDetails(@RequestHeader("easybank-correlation-id") String correlationId, @RequestParam String mobileNumber);

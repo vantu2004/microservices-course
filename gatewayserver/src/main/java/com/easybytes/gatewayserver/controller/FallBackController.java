@@ -10,6 +10,6 @@ import reactor.core.publisher.Mono;
 public class FallBackController {
     @GetMapping("/contact-support")
     public Mono<String> contactSupport() {
-        return Mono.just("An error occurred.Please try after some time ỏ contact support team");
+        return Mono.just("An error occurred. Please try after some time ỏ contact support team");
     }
 }

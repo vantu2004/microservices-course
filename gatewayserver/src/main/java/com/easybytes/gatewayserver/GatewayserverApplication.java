@@ -28,10 +28,12 @@ public class GatewayserverApplication {
                                         "/${segment}"
                                 )
                                 .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                                // cấu hình ở đây là bảo vệ request từ client-microservice
+                                // cấu hình ở riêng service là bảo vệ service-to-service call
                                 .circuitBreaker(config -> config
-                                // truy cập /actuator/circuitbreakerevents?name=accountsCircuitBreaker
-                                .setName("accountsCircuitBreaker")
-                                .setFallbackUri("forward:/api/v1/fall-back/contact-support"))
+                                        // truy cập /actuator/circuitbreakerevents?name=accountsCircuitBreaker
+                                        .setName("accountsCircuitBreaker")
+                                        .setFallbackUri("forward:/api/v1/fall-back/contact-support"))
                         )
                         .uri("lb://ACCOUNTS")
                 )
@@ -43,6 +45,9 @@ public class GatewayserverApplication {
                                         "/${segment}"
                                 )
                                 .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                                .circuitBreaker(config -> config
+                                        .setName("loansCircuitBreaker")
+                                        .setFallbackUri("forward:/api/v1/fall-back/contact-support"))
                         )
                         .uri("lb://LOANS")
                 )
@@ -54,6 +59,9 @@ public class GatewayserverApplication {
                                         "/${segment}"
                                 )
                                 .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                                .circuitBreaker(config -> config
+                                        .setName("cardsCircuitBreaker")
+                                        .setFallbackUri("forward:/api/v1/fall-back/contact-support"))
                         )
                         .uri("lb://CARDS")
                 )
