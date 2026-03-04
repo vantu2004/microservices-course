@@ -45,9 +45,7 @@ public class GatewayserverApplication {
                                         "/${segment}"
                                 )
                                 .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
-                                .circuitBreaker(config -> config
-                                        .setName("loansCircuitBreaker")
-                                        .setFallbackUri("forward:/api/v1/fall-back/contact-support"))
+                                // ko thử circuitbreaker nữa mà chuyển qua http-timeout bên application.yml
                         )
                         .uri("lb://LOANS")
                 )
