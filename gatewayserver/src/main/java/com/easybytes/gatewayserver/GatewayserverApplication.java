@@ -30,7 +30,8 @@ public class GatewayserverApplication {
                                 .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
                                 .circuitBreaker(config -> config
                                 // truy cập /actuator/circuitbreakerevents?name=accountsCircuitBreaker
-                                .setName("accountsCircuitBreaker"))
+                                .setName("accountsCircuitBreaker")
+                                .setFallbackUri("forward:/api/v1/fall-back/contact-support"))
                         )
                         .uri("lb://ACCOUNTS")
                 )
