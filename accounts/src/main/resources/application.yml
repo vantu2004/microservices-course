@@ -93,3 +93,17 @@ resilience4j.circuitbreaker:
       permittedNumberOfCallsInHalfOpenState: 2
       waitDurationInOpenState: 10000
       failureRateThreshold: 50
+
+resilience4j.retry:
+  configs:
+    default:
+      max-attempts: 3
+      wait-duration: 500
+      enable-exponential-backoff: true
+      exponential-backoff-multiplier: 2
+      # nếu throw exception này thì nó ko retry và chuyển qua hàm fallback luôn
+      ignore-exceptions:
+        - java.lang.NullPointerException
+      # chỉ những exception trong này mới retry còn lại chuyển thẳng sang fallback
+      retry-exceptions:
+        - java.util.concurrent.TimeoutException

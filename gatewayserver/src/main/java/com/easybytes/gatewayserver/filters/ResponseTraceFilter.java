@@ -41,16 +41,19 @@ public class ResponseTraceFilter {
                         String correlationId =
                                 filterUtility.getCorrelationId(requestHeaders);
 
-                        logger.debug(
-                                "Updated the correlation id to the outbound headers: {}",
-                                correlationId
-                        );
+                        // check trước đảm bảo không response nhiều lần khi server retry
+                        if (!(exchange.getResponse().getHeaders().containsHeader(correlationId))) {
+                            logger.debug(
+                                    "Updated the correlation id to the outbound headers: {}",
+                                    correlationId
+                            );
 
-                        // Thêm correlation-id vào response header
-                        exchange.getResponse()
-                                .getHeaders()
-                                .add(FilterUtility.CORRELATION_ID,
-                                        correlationId);
+                            // Thêm correlation-id vào response header
+                            exchange.getResponse()
+                                    .getHeaders()
+                                    .add(FilterUtility.CORRELATION_ID,
+                                            correlationId);
+                        }
                     }));
         };
     }
