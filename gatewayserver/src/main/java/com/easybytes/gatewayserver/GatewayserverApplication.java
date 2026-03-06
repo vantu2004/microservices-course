@@ -8,10 +8,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 
@@ -75,6 +78,7 @@ public class GatewayserverApplication {
                                 .circuitBreaker(config -> config
                                         .setName("cardsCircuitBreaker")
                                         .setFallbackUri("forward:/api/v1/fall-back/contact-support"))
+                                .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolve()))
                         )
                         .uri("lb://CARDS")
                 )
@@ -93,5 +97,22 @@ public class GatewayserverApplication {
                         )
                         .build()
         );
+    }
+
+    @Bean
+    public RedisRateLimiter redisRateLimiter() {
+        /*
+            giả sử 1 user có 1 bucket chứa token
+            - ReplenishRate là số lượng token được add vào bucket mỗi giây
+            - BurstCapacity là lượng token tối đa được add vào bucket
+            - RequestedTokens là lượng token/request
+        */
+        return new RedisRateLimiter(1, 1, 1);
+    }
+
+    // giúp xác định key để ratelimit
+    @Bean
+    KeyResolver userKeyResolve() {
+        return exchange -> Mono.justOrEmpty(exchange.getRequest().getHeaders().getFirst("user")).defaultIfEmpty("anonymous");
     }
 }

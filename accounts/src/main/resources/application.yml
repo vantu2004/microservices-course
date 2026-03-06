@@ -107,3 +107,10 @@ resilience4j.retry:
       # chỉ những exception trong này mới retry còn lại chuyển thẳng sang fallback
       retry-exceptions:
         - java.util.concurrent.TimeoutException
+
+resilience4j.ratelimiter:
+  configs:
+    default:
+      timeout-duration: 1000
+      limit-refresh-period: 5000
+      limit-for-period: 1
