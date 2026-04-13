@@ -19,5 +19,5 @@
 6. xem tất cả container đã tạo gồm đang chạy và đã dừng
     docker ps -a
 
-7. push image leen Dockerhub
+7. push image lên Dockerhub
     docker image push docker.io/vantu26511/accounts:v100
