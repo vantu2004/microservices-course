@@ -125,7 +125,7 @@ services:
   backend:
     image: grafana/loki:latest
     volumes:
-      - ./loki-config.yml:/etc/loki/config.yml
+      - ../observability/loki/loki-config.yml:/etc/loki/config.yml
     ports:
       - "3100"
       - "7946"
@@ -336,7 +336,7 @@ services:
       service: microservice-eureka-config
 
   gatewayserver:
-    image: "vantu26511/gatewayserver:v101"
+    image: "vantu26511/gatewayserver:v102"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"

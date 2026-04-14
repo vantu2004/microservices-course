@@ -3,17 +3,17 @@ discovery.docker "flog_scrape" {
   refresh_interval = "5s"
 }
 
-  discovery.relabel "flog_scrape" {
+discovery.relabel "flog_scrape" {
   targets = []
   
   rule {
-  source_labels = ["__meta_docker_container_name"]
-  regex         = "/(.*)"
-  target_label  = "container"
+    source_labels = ["__meta_docker_container_name"]
+    regex         = "/(.*)"
+    target_label  = "container"
   }
 }
 
-  loki.source.docker "flog_scrape" {
+loki.source.docker "flog_scrape" {
   host             = "unix:///var/run/docker.sock"
   targets          = discovery.docker.flog_scrape.targets
   forward_to       = [loki.write.default.receiver]
@@ -21,10 +21,10 @@ discovery.docker "flog_scrape" {
   refresh_interval = "5s"
 }
 
-  loki.write "default" {
+loki.write "default" {
   endpoint {
-  url       = "http://gateway:3100/loki/api/v1/push"
-  tenant_id = "tenant1"
+    url       = "http://gateway:3100/loki/api/v1/push"
+    tenant_id = "tenant1"
   }
   external_labels = {}
 }
