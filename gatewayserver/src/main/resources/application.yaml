@@ -42,6 +42,10 @@ management:
   info:
     env:
       enabled: true
+  # bảo micrometer & Prometheus gom tất cả metrics của account service lại
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 # load từ github repo
 #eureka:

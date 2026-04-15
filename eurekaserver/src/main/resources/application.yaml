@@ -24,3 +24,7 @@ management:
     health:
       probes:
         enabled: true
+  # bảo micrometer & Prometheus gom tất cả metrics của account service lại
+  metrics:
+    tags:
+      application: ${spring.application.name}

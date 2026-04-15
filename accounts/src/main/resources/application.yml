@@ -61,6 +61,10 @@ management:
       enabled: true
     liveness-state:
       enabled: true
+  # bảo micrometer & Prometheus gom tất cả metrics của account service lại
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 eureka:
   instance:
