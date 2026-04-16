@@ -158,7 +158,7 @@
                 <version>3.5.1</version>
                 <configuration>
                     <to>
-                        <image>vantu26511/${project.artifactId}:v105</image>
+                        <image>vantu26511/${project.artifactId}:v106</image>
                     </to>
                 </configuration>
             </plugin>

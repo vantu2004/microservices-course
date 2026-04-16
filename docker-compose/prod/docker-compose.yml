@@ -85,6 +85,17 @@ services:
       file: common-config.yml
       service: network-deploy-service
 
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ../observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
   grafana:
     image: grafana/grafana:latest
     environment:
@@ -97,22 +108,11 @@ services:
       - sh
       - -euc
       - |
-        mkdir -p /etc/grafana/provisioning/datasources
-        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yml
-        apiVersion: 1
-        datasources:
-          - name: Loki
-            type: loki
-            access: proxy
-            url: http://gateway:3100
-            jsonData:
-              httpHeaderName1: "X-Scope-OrgID"
-            secureJsonData:
-              httpHeaderValue1: "tenant1"
-        EOF
         /run.sh
     ports:
       - "3000:3000"
+    volumes:
+      - ../observability/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
       interval: 10s
@@ -241,7 +241,7 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "vantu26511/configserver:v102"
+    image: "vantu26511/configserver:v103"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -261,7 +261,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "vantu26511/eurekaserver:v101"
+    image: "vantu26511/eurekaserver:v102"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -281,7 +281,7 @@ services:
       service: microservice-configserver-config
 
   accounts:
-    image: "vantu26511/accounts:v105"
+    image: "vantu26511/accounts:v106"
     container_name: accounts-ms
     ports:
       - "8080:8080"
@@ -300,7 +300,7 @@ services:
       service: microservice-eureka-config
 
   loans:
-    image: "vantu26511/loans:v105"
+    image: "vantu26511/loans:v106"
     container_name: loans-ms
     ports:
       - "8090:8090"
@@ -318,7 +318,7 @@ services:
       service: microservice-eureka-config
 
   cards:
-    image: "vantu26511/cards:v105"
+    image: "vantu26511/cards:v106"
     container_name: cards-ms
     ports:
       - "9000:9000"
@@ -336,7 +336,7 @@ services:
       service: microservice-eureka-config
 
   gatewayserver:
-    image: "vantu26511/gatewayserver:v102"
+    image: "vantu26511/gatewayserver:v103"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
