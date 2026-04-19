@@ -28,7 +28,7 @@ services:
       # override lại host trong applciation.yml theo tên service trong docker-compose.yml chứ ko để localhost nữa
       SPRING_RABBITMQ_HOST: "rabbitmq"
       # khi container start, JVM đọc JAVA_TOOL_OPTIONS và load opentelemetry-javaagent.jar, sau đó Agent hook vào Spring Boot tự tạo trace/span
-      JAVA_TOOL_OPTIONS: "-javaagent:app/libs/opentelemetry-javaagent-2.22.0.jar"
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-2.26.1.jar"
       # Loki lưu logs, Prometheus lưu metrics, Tempo lưu traces
       OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318
       # tắt metrics của Opentelemerty vì đã dùng Micrometer & Prometheus

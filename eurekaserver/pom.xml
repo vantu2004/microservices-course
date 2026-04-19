@@ -29,6 +29,7 @@
     <properties>
         <java.version>17</java.version>
         <spring-cloud.version>2025.1.0</spring-cloud.version>
+        <otelVersion>2.26.1</otelVersion>
     </properties>
     <dependencies>
         <dependency>
@@ -56,6 +57,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry.javaagent</groupId>
+            <artifactId>opentelemetry-javaagent</artifactId>
+            <version>${otelVersion}</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
     <dependencyManagement>

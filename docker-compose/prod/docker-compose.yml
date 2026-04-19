@@ -14,7 +14,7 @@ services:
     healthcheck:
       test: [ "CMD", "/usr/bin/loki", "-health" ]
       start_period: 30s
-      interval: 10s
+      interval: 20s
       timeout: 5s
       retries: 5
     networks: &loki-dns
@@ -36,7 +36,7 @@ services:
     healthcheck:
       test: [ "CMD", "/usr/bin/loki", "-health" ]
       start_period: 30s
-      interval: 10s
+      interval: 20s
       timeout: 5s
       retries: 5
     depends_on:
@@ -97,7 +97,7 @@ services:
       service: network-deploy-service
 
   tempo:
-    image: grafana/tempo
+    image: grafana/tempo:2.10.4
     container_name: tempo
     command: -config.file /etc/tempo-config.yml
     ports:
@@ -128,7 +128,7 @@ services:
       - ../observability/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
-      interval: 10s
+      interval: 20s
       timeout: 5s
       retries: 5
     extends:
@@ -218,7 +218,7 @@ services:
       - "3100:3100"
     healthcheck:
       test: [ "CMD", "service", "nginx", "status" ]
-      interval: 10s
+      interval: 20s
       timeout: 5s
       retries: 5
     extends:
@@ -233,9 +233,9 @@ services:
       - "15672:15672"
     healthcheck:
       test: rabbitmq-diagnostics check_port_connectivity
-      interval: 10s
+      interval: 20s
       timeout: 5s
-      retries: 10
+      retries: 20
       start_period: 10s
     extends:
       file: common-config.yml
@@ -248,7 +248,7 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
       timeout: 10s
-      retries: 10
+      retries: 20
     extends:
       file: common-config.yml
       service: network-deploy-service
@@ -263,17 +263,16 @@ services:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8071/actuator/health/liveness | grep UP || exit 1"
-      interval: 10s
+      interval: 20s
       timeout: 5s
-      retries: 10
+      retries: 20
       start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "configserver"
+      OTEL_SERVICE_NAME: "configserver"
     extends:
       file: common-config.yml
       service: microservice-base-config
-    environment:
-      OTEL_SERVICE_NAME: "configserver"
 
   eurekaserver:
     image: "vantu26511/eurekaserver:v102"
@@ -285,9 +284,9 @@ services:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8070/actuator/health/liveness | grep UP || exit 1"
-      interval: 10s
+      interval: 20s
       timeout: 5s
-      retries: 10
+      retries: 20
       start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "eurekaserver"
@@ -303,9 +302,9 @@ services:
       - "8080:8080"
     healthcheck:
       test: "curl --fail --silent localhost:8080/actuator/health/liveness | grep UP || exit 1"
-      interval: 10s
+      interval: 20s
       timeout: 5s
-      retries: 10
+      retries: 20
       start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "accounts"
@@ -323,9 +322,9 @@ services:
       - "8090:8090"
     healthcheck:
       test: "curl --fail --silent localhost:8090/actuator/health/liveness | grep UP || exit 1"
-      interval: 10s
+      interval: 20s
       timeout: 5s
-      retries: 10
+      retries: 20
       start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "loans"
@@ -342,9 +341,9 @@ services:
       - "9000:9000"
     healthcheck:
       test: "curl --fail --silent localhost:9000/actuator/health/liveness | grep UP || exit 1"
-      interval: 10s
+      interval: 20s
       timeout: 5s
-      retries: 10
+      retries: 20
       start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "cards"
