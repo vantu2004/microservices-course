@@ -1,3 +1,10 @@
 spring:
   application:
     name: message
+  cloud:
+    function:
+      # chạy function email rồi lấy output của nó truyền vào sms
+      definition: email|sms
+
+server:
+  port: 9010
