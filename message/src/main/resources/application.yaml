@@ -5,6 +5,21 @@ spring:
     function:
       # chạy function email rồi lấy output của nó truyền vào sms
       definition: email|sms
+    stream:
+      # map giữa function (email|sms) và queue trong broker
+      bindings:
+        # tên function - input - input index
+        emailsms-in-0:
+          # lắng nghe message từ queue send-communication
+          destination: send-communication
+          # consumer instance cùng group → chia nhau xử lý message (load balancing)
+          group: ${spring.application.name}
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    connection-timeout: 10s
 
 server:
   port: 9010
