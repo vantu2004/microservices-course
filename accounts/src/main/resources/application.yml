@@ -40,12 +40,18 @@ spring:
         enabled: true
     bus:
       enabled: false
+    function:
+      # nếu muốn nhiều function hơn thì dùng ";" và ko " "
+      definition: updateCommunication
     stream:
       bindings:
         # ko có funtion nên đặt binding name bất kì - output - output index
         sendCommunication-out-0:
           # gửi message vào exchange send-communication
           destination: send-communication
+        updateCommunication-in-0:
+          destination: communication-sent
+          group: ${spring.application.name}
 
 management:
   endpoints:

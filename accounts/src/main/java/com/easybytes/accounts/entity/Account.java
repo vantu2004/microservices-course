@@ -22,4 +22,7 @@ public class Account extends BaseEntity {
 
     @Column(name = "branch_address")
     private String branchAddress;
+
+    @Column(name = "communnication_sw")
+    private boolean communicationSw;
 }

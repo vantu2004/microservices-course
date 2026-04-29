@@ -4,6 +4,7 @@ spring:
   cloud:
     function:
       # chạy function email rồi lấy output của nó truyền vào sms
+      # nếu muốn nhiều function hơn thì dùng ";" và ko " "
       definition: email|sms
     stream:
       # map giữa function (email|sms) và queue trong broker
@@ -14,6 +15,10 @@ spring:
           destination: send-communication
           # consumer instance cùng group → chia nhau xử lý message (load balancing)
           group: ${spring.application.name}
+
+        # sau khi xử lý xog event thì gửi 1 event báo ngươc lại
+        emailsms-out-0:
+          destination: communication-sent
   rabbitmq:
     host: localhost
     port: 5672
