@@ -16,6 +16,9 @@
     - Loans Microservice
     - Gateway Server
 
+    // hiện tại thì Message Server độc lập chưa liên quan quá nhiều tới các server khác
+    - Message Server
+
 4. Lệnh chạy redis
     docker run -d --name redis -p 6379:6379 redis
 
