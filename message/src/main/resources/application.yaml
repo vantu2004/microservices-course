@@ -10,7 +10,7 @@ spring:
       bindings:
         # tên function - input - input index
         emailsms-in-0:
-          # lắng nghe message từ queue send-communication
+          # lắng nghe message từ exchange send-communication
           destination: send-communication
           # consumer instance cùng group → chia nhau xử lý message (load balancing)
           group: ${spring.application.name}
@@ -19,7 +19,6 @@ spring:
     port: 5672
     username: guest
     password: guest
-    connection-timeout: 10s
 
 server:
   port: 9010

@@ -38,6 +38,14 @@ spring:
     openfeign:
       circuitbreaker:
         enabled: true
+    bus:
+      enabled: false
+    stream:
+      bindings:
+        # ko có funtion nên đặt binding name bất kì - output - output index
+        sendCommunication-out-0:
+          # gửi message vào exchange send-communication
+          destination: send-communication
 
 management:
   endpoints:

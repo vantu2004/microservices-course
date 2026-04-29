@@ -16,6 +16,8 @@ spring:
         # native:
           # search-locations: "classpath:/config"
           # search-locations: "file:///C://Users//tulev//OneDrive//Documents//bin//config"
+    bus:
+      enabled: false
   rabbitmq:
     host: localhost
     port: 5672
@@ -43,7 +45,7 @@ management:
     health:
       probes:
         enabled: true
-  # bảo micrometer & Prometheus gom tất cả metrics của account service lại
+  # bảo micrometer & Prometheus gom tất cả metrics của config service lại
   metrics:
     tags:
       application: ${spring.application.name}

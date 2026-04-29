@@ -22,6 +22,8 @@ spring:
           httpclient:
             connect-timeout: 1000
             response-timeout: 10s
+    bus:
+      enabled: false
   data:
     redis:
       connect-timeout: 2s
